@@ -1,14 +1,20 @@
 package com.roli.indriveclone.presentation.screens.auth.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,13 +23,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.roli.indriveclone.R
 
 @Composable
 fun LoginScreen() {
-    Scaffold{paddingValues ->
+    Scaffold(
+        contentWindowInsets = WindowInsets.navigationBars
+    ){paddingValues ->
         Box(modifier = Modifier
                     .fillMaxSize()
                     .background(
@@ -52,6 +62,48 @@ fun LoginScreen() {
                     modifier = Modifier.rotate(90f).padding(top = 30.dp)
                 )
                 Spacer(modifier = Modifier.height(250.dp))
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 60.dp, bottom = 35.dp)
+                    .background(
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color(0xFFFEFA1E),Color(0xFF673AB7))
+                        ),
+                        shape = RoundedCornerShape(
+                            topStart = 35.dp,
+                            bottomStart = 35.dp
+                        )
+                    )
+            ){
+                Column(modifier = Modifier.statusBarsPadding()) {
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(
+                        text = "Wellcome",
+                        color=Color.White,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "back...",
+                        color=Color.White,
+                        fontSize = 30.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Image(
+                        modifier = Modifier.size(150.dp),
+                        painter = painterResource(id=R.drawable.car_white),
+                        contentDescription = ""
+
+                    )
+                    Text(
+                        text = "Log in",
+                        color=Color.White,
+                        fontSize = 27.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }
