@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -92,32 +93,41 @@ fun LoginScreen() {
                         )
                     )
             ){
-                Column(modifier = Modifier.statusBarsPadding()) {
+                Column(modifier = Modifier.statusBarsPadding().padding(start = 25.dp)) {
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(
                         text = "Wellcome",
                         color=Color.White,
-                        fontSize = 30.sp,
+                        fontSize = 35.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = "back...",
                         color=Color.White,
-                        fontSize = 30.sp,
+                        fontSize = 35.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Image(
-                        modifier = Modifier.size(150.dp),
-                        painter = painterResource(id=R.drawable.car_white),
-                        contentDescription = ""
+                    Box(modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 25.dp)
+                    ){
+                        Image(
+                            modifier = Modifier
+                                .size(180.dp)
+                                .align(Alignment.CenterEnd),
+                            painter = painterResource(id=R.drawable.car_white),
+                            contentDescription = ""
 
-                    )
+                        )
+                    }
+
                     Text(
                         text = "Log in",
                         color=Color.White,
                         fontSize = 27.sp,
                         fontWeight = FontWeight.Bold
                     )
+                    Spacer(modifier = Modifier.height(50.dp))
                     TextField(
                         value =email,
                         onValueChange={
@@ -125,6 +135,7 @@ fun LoginScreen() {
                         },
                         label = {(Text(text = "Email"))}
                     )
+                    Spacer(modifier = Modifier.height(20.dp))
                     TextField(
                         value =password,
                         onValueChange={
@@ -132,49 +143,63 @@ fun LoginScreen() {
                         },
                         label = {(Text(text = "Password"))}
                     )
-                    Button(
-                        onClick = {}
-                    ) {
-                        Text(text = "Iniciar Sesión")
+                    Spacer(modifier = Modifier.weight(1f))
+                    Box(modifier = Modifier.fillMaxWidth()){
+                        Button(
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(Color.Black),
+                            modifier = Modifier
+                                      .align(Alignment.Center)
+                                      .width(250.dp)
+                                      .height(55.dp)
+                        ) {
+                            Text(text = "Iniciar Sesión", fontSize = 18.sp, color = Color.White)
+                        }
                     }
+                    Spacer(modifier=Modifier.height(20.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Spacer(
                             modifier = Modifier
-                                .width(25.dp)
+                                .width(30.dp)
                                 .height(1.dp)
-                                .background(Color.White)
+                                .background(Color.Black)
                         )
                         Text(
+                            modifier = Modifier.padding(horizontal = 10.dp),
                             text = "O",
-                            color=Color.White,
-                            fontSize = 17.sp
+                            color=Color.Black,
+                            fontSize = 20.sp
                         )
                         Spacer(
                             modifier = Modifier
-                                .width(25.dp)
+                                .width(30.dp)
                                 .height(1.dp)
-                                .background(Color.White)
+                                .background(Color.Black)
                         )
                     }
+                    Spacer(modifier=Modifier.height(20.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
                          Text(
                             text = "No tienes cuenta? ",
-                            color=Color.White,
+                            color=Color.Black,
                             fontSize = 17.sp
                         )
+                        Spacer(modifier = Modifier.width(5.dp))
                         Text(
                             text = "Registrate",
-                            color=Color.White,
+                            color=Color.Black,
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Bold
                         )
                     }
+                    Spacer(modifier=Modifier.height(70.dp))
                 }
             }
         }
