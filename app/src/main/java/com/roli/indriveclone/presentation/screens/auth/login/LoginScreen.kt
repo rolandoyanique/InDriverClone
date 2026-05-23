@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -38,6 +39,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.roli.indriveclone.R
+import com.roli.indriveclone.presentation.components.DefaultTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
 fun LoginScreen() {
@@ -128,20 +136,27 @@ fun LoginScreen() {
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.height(50.dp))
-                    TextField(
-                        value =email,
+                    DefaultTextField(
+                        modifier = Modifier,
+                        value = email,
+                        label = "Email",
+                        icon = Icons.Outlined.Email,
                         onValueChange={
                             email=it
                         },
-                        label = {(Text(text = "Email"))}
+                        keyboardType = KeyboardType.Email
                     )
                     Spacer(modifier = Modifier.height(20.dp))
-                    TextField(
-                        value =password,
+                    DefaultTextField(
+                        modifier = Modifier,
+                        value = password,
+                        label = "Password",
+                        icon = Icons.Outlined.Lock,
                         onValueChange={
                             password=it
                         },
-                        label = {(Text(text = "Password"))}
+                        keyboardType = KeyboardType.Password,
+                        hideText = true
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Box(modifier = Modifier.fillMaxWidth()){
