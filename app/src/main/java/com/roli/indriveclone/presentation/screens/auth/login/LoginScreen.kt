@@ -2,6 +2,7 @@ package com.roli.indriveclone.presentation.screens.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,9 +47,11 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.navigation.NavHostController
+import com.roli.indriveclone.presentation.navigation.screen.auth.AuthScreen
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
     var email by remember{
         mutableStateOf("")
     }
@@ -83,7 +86,9 @@ fun LoginScreen() {
                     text = "Registro",
                     color = Color.White,
                     fontSize = 27.sp,
-                    modifier = Modifier.rotate(90f).padding(top = 30.dp)
+                    modifier = Modifier
+                            .clickable{ navController.navigate(route = AuthScreen.Register.route)}
+                            .rotate(90f).padding(top = 30.dp)
                 )
                 Spacer(modifier = Modifier.height(250.dp))
             }
