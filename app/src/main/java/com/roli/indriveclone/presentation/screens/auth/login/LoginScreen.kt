@@ -29,7 +29,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.rotate
@@ -46,6 +45,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.navigation.NavHostController
 import com.roli.indriveclone.presentation.navigation.screen.auth.AuthScreen
@@ -98,7 +98,7 @@ fun LoginScreen(navController: NavHostController) {
                     .padding(start = 60.dp, bottom = 35.dp)
                     .background(
                         brush = Brush.linearGradient(
-                            colors = listOf(Color(0xFFFEFA1E),Color(0xFF673AB7))
+                            colors = listOf(Color(0xFFC9AD1F),Color(0xFFFCDA22))
                         ),
                         shape = RoundedCornerShape(
                             topStart = 35.dp,
@@ -106,7 +106,8 @@ fun LoginScreen(navController: NavHostController) {
                         )
                     )
             ){
-                Column(modifier = Modifier.statusBarsPadding().padding(start = 25.dp)) {
+                Column(modifier = Modifier.statusBarsPadding(),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(
                         text = "Wellcome",
@@ -126,7 +127,7 @@ fun LoginScreen(navController: NavHostController) {
                     ){
                         Image(
                             modifier = Modifier
-                                .size(180.dp)
+                                .size(150.dp)
                                 .align(Alignment.CenterEnd),
                             painter = painterResource(id=R.drawable.car_white),
                             contentDescription = ""
@@ -176,7 +177,7 @@ fun LoginScreen(navController: NavHostController) {
                             Text(text = "Iniciar Sesión", fontSize = 18.sp, color = Color.White)
                         }
                     }
-                    Spacer(modifier=Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.weight(1f))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
@@ -213,6 +214,7 @@ fun LoginScreen(navController: NavHostController) {
                         )
                         Spacer(modifier = Modifier.width(5.dp))
                         Text(
+                            modifier = Modifier.clickable{navController.navigate(route = AuthScreen.Register.route)},
                             text = "Registrate",
                             color=Color.Black,
                             fontSize = 17.sp,
