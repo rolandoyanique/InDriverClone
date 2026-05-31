@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -41,6 +43,9 @@ android {
 
 dependencies {
     implementation ("androidx.navigation:navigation-compose:2.9.8")
+    implementation("com.google.dagger:hilt-android:2.59.2")
+    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+    ksp("com.google.dagger:hilt-android-compiler:2.59.2")
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)

@@ -17,7 +17,9 @@ import androidx.navigation.compose.rememberNavController
 import com.roli.indriveclone.presentation.navigation.graph.root.RootNavGraph
 import com.roli.indriveclone.presentation.screens.auth.login.LoginScreen
 import com.roli.indriveclone.ui.theme.InDriveCloneTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navHostController: NavHostController;
     override fun onCreate(savedInstanceState: Bundle?) {

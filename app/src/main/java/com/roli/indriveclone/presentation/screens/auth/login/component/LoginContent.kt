@@ -43,13 +43,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.roli.indriveclone.presentation.components.DefaultButton
 import com.roli.indriveclone.presentation.screens.auth.login.LoginViewModel
 
 @Composable
-fun LoginContent(navHostController: NavHostController,paddingValues: PaddingValues) {
-    val vm: LoginViewModel = viewModel()
+fun LoginContent(navHostController: NavHostController,paddingValues: PaddingValues,vm: LoginViewModel= hiltViewModel()) {
     val state=vm.state;
     Box(modifier = Modifier
         .fillMaxSize()
