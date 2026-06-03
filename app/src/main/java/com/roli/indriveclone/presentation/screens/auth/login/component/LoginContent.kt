@@ -2,6 +2,8 @@ package com.roli.indriveclone.presentation.screens.auth.login.component
 
 import android.R.attr.tag
 import android.util.Log
+import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +27,7 @@ import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -43,6 +46,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.roli.indriveclone.presentation.components.DefaultButton
@@ -51,6 +55,12 @@ import com.roli.indriveclone.presentation.screens.auth.login.LoginViewModel
 @Composable
 fun LoginContent(navHostController: NavHostController,paddingValues: PaddingValues,vm: LoginViewModel= hiltViewModel()) {
     val state=vm.state;
+    val context =LocalContext.current;
+    LaunchedEffect(key1 = vm.errorMessage ) {
+        if(vm.errorMessage.isEmpty()){
+            Toast.makeText(context,vm.errorMessage, Toast.LENGTH_LONG)
+        }
+    }
     Box(modifier = Modifier
         .fillMaxSize()
         .background(
