@@ -57,8 +57,8 @@ fun LoginContent(navHostController: NavHostController,paddingValues: PaddingValu
     val state=vm.state;
     val context =LocalContext.current;
     LaunchedEffect(key1 = vm.errorMessage ) {
-        if(vm.errorMessage.isEmpty()){
-            Toast.makeText(context,vm.errorMessage, Toast.LENGTH_LONG)
+        if(vm.errorMessage.isNotEmpty()){
+            Toast.makeText(context,vm.errorMessage, Toast.LENGTH_LONG).show();
         }
     }
     Box(modifier = Modifier
