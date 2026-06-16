@@ -1,10 +1,14 @@
 package com.rolidev.apirest.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,6 +32,9 @@ public class Role {
 
     @Column(name="update_at", nullable=false)
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "role",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserHashRoles>users = new HashSet<>();
 
     public Role(){}
 

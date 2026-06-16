@@ -1,6 +1,7 @@
 package com.rolidev.apirest.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     public User create(CreateUserRequest request){
         if(userRepository.existsByEmail(request.getEmail())){
@@ -24,7 +28,9 @@ public class UserService {
         user.setLastname(request.getLastname());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
-        user.setPassword(request.getPassword());
+        String encryptedPassword = passwordEncoder.encode(request.getPassword());
+
+        user.setPassword(encryptedPassword);
         return userRepository.save(user);
     }
 }
