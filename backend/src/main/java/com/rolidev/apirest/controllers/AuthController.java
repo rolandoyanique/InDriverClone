@@ -1,5 +1,9 @@
 package com.rolidev.apirest.controllers;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +19,14 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping({"", "/"})
-    public ResponseEntity<User> create(@RequestBody CreateUserRequest request){
-        User user=userService.create(request);
-        return ResponseEntity.ok(user);
+    @PostMapping("/register")
+    public ResponseEntity<?> create(@RequestBody CreateUserRequest request){
+        try{
+            User user=userService.create(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message",e.getMessage(),"statusCode",HttpStatus.BAD_REQUEST.value()));
+        }
+        
     }
 }

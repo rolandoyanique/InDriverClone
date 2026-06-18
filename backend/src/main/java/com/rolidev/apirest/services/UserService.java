@@ -6,14 +6,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rolidev.apirest.models.User;
+import com.rolidev.apirest.models.UserHashRoles;
+import com.rolidev.apirest.models.Role;
 import com.rolidev.apirest.dto.user.CreateUserRequest;
+import com.rolidev.apirest.repositories.RoleRepository;
 import com.rolidev.apirest.repositories.UserRepository;
+import com.rolidev.apirest.repositories.UserHasRolesRepository;
 
 @Service
 public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private UserHasRolesRepository userHasRolesRepository;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -31,6 +42,13 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(request.getPassword());
 
         user.setPassword(encryptedPassword);
-        return userRepository.save(user);
+        User saveUser = userRepository.save(user);
+        Role clientRole=roleRepository.findById("CLIENT").orElseThrow(
+            () -> new RuntimeException("El rol de cliente no existe")
+        );
+
+        UserHashRoles userHashRoles = new UserHashRoles(saveUser,clientRole);
+        userHasRolesRepository.save(userHashRoles);
+        return saveUser;
     }
 }
