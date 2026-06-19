@@ -1,5 +1,7 @@
 package com.rolidev.apirest.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.rolidev.apirest.models.User;
 import com.rolidev.apirest.models.UserHashRoles;
 import com.rolidev.apirest.models.Role;
+import com.rolidev.apirest.dto.role.RoleDTO;
 import com.rolidev.apirest.dto.user.CreateUserRequest;
+import com.rolidev.apirest.dto.user.CreateUserResponse;
 import com.rolidev.apirest.repositories.RoleRepository;
 import com.rolidev.apirest.repositories.UserRepository;
 import com.rolidev.apirest.repositories.UserHasRolesRepository;
@@ -30,7 +34,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User create(CreateUserRequest request){
+    public CreateUserResponse create(CreateUserRequest request){
         if(userRepository.existsByEmail(request.getEmail())){
             throw new RuntimeException("El correo ya se encuentra registrado");
         }
@@ -49,6 +53,20 @@ public class UserService {
 
         UserHashRoles userHashRoles = new UserHashRoles(saveUser,clientRole);
         userHasRolesRepository.save(userHashRoles);
-        return saveUser;
+
+        CreateUserResponse response=new CreateUserResponse();
+
+        response.setId(saveUser.getId());
+        response.setName(saveUser.getName());;
+        response.setLastname(saveUser.getLastname());
+        response.setImagen(saveUser.getImage());
+        response.setPhone(saveUser.getPhone());
+
+        List<Role> roles = roleRepository.findAllByUserHashRoles_User_Id(saveUser.getId());
+        List<RoleDTO> roleDTOs = roles.stream().map(
+            role -> new RoleDTO(role.getId(),role.getName(),role.getImage(),role.getRoute())
+        ).toList();
+        response.setRoles(roleDTOs);
+        return response;
     }
 }

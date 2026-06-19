@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.rolidev.apirest.services.UserService;
 import com.rolidev.apirest.models.User;
 import com.rolidev.apirest.dto.user.CreateUserRequest;
+import com.rolidev.apirest.dto.user.CreateUserResponse;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -22,7 +23,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> create(@RequestBody CreateUserRequest request){
         try{
-            User user=userService.create(request);
+            CreateUserResponse user=userService.create(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(user);
         }catch(RuntimeException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message",e.getMessage(),"statusCode",HttpStatus.BAD_REQUEST.value()));
