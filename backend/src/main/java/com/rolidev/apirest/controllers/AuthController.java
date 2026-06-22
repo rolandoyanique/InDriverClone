@@ -13,6 +13,8 @@ import com.rolidev.apirest.services.UserService;
 import com.rolidev.apirest.models.User;
 import com.rolidev.apirest.dto.user.CreateUserRequest;
 import com.rolidev.apirest.dto.user.CreateUserResponse;
+import com.rolidev.apirest.dto.user.LoginRequest;
+import com.rolidev.apirest.dto.user.LoginResponse;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -30,4 +32,16 @@ public class AuthController {
         }
         
     }
+    
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+        try{
+            LoginResponse response=userService.login(request);
+            return ResponseEntity.ok(response);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message",e.getMessage(),"statusCode",HttpStatus.UNAUTHORIZED.value()));
+        }
+        
+    }
 }
+
