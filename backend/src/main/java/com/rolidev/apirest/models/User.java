@@ -1,8 +1,15 @@
 package com.rolidev.apirest.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,7 +25,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="users")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,5 +96,19 @@ public class User {
     @PreUpdate
     public void onUpdate(){
         this.updateAt=LocalDateTime.now();
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (UserHashRoles uhr : userHashRoles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + uhr.getRole().getName()));
+        }
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 }

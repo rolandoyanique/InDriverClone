@@ -104,4 +104,23 @@ public class UserService {
         response.setUser(userResponse);
         return response;
     }
+       @Transactional
+    public CreateUserResponse findById(Long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("el Email o el Password no son validos"));
+        List<Role> roles = roleRepository.findAllByUserHashRoles_User_Id(user.getId());
+        List<RoleDTO> roleDTOs = roles.stream().map(
+            role -> new RoleDTO(role.getId(),role.getName(),role.getImage(),role.getRoute())
+        ).toList();
+
+        CreateUserResponse userResponse = new CreateUserResponse();
+        userResponse.setId(user.getId());
+        userResponse.setName(user.getName());
+        userResponse.setLastname(user.getLastname());
+        userResponse.setImagen(user.getImage());
+        userResponse.setPhone(user.getPhone());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setRoles(roleDTOs);
+        return userResponse;
+    }
+
 }
