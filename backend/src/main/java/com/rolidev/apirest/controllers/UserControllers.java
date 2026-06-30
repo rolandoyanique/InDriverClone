@@ -6,9 +6,11 @@ import com.rolidev.apirest.dto.user.CreateUserRequest;
 import com.rolidev.apirest.dto.user.CreateUserResponse;
 import com.rolidev.apirest.dto.user.LoginRequest;
 import com.rolidev.apirest.dto.user.LoginResponse;
+import com.rolidev.apirest.dto.user.UpdateUserRequest;
 import com.rolidev.apirest.models.User;
 import com.rolidev.apirest.services.UserService;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -43,6 +48,19 @@ public class UserControllers {
             return ResponseEntity.ok(response);
         }catch(RuntimeException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message",e.getMessage(),"statusCode",HttpStatus.NOT_FOUND.value()));
+        }
+        
+    }
+    
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,@ModelAttribute UpdateUserRequest request){
+        try{
+            CreateUserResponse response=userService.updateUserWithImage(id,request);
+            return ResponseEntity.ok(response);
+        }catch(RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message",e.getMessage(),"statusCode",HttpStatus.NOT_FOUND.value()));
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message",e.getMessage(),"statusCode",HttpStatus.INTERNAL_SERVER_ERROR.value()));
         }
         
     }
